@@ -2,6 +2,7 @@ package no.itera.ateleven.repository
 
 import no.itera.ateleven.model.DailyMenu
 import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource(collectionResourceRel = "daily-menu", path = "daily-menu")
 interface DailyMenuRepository : CrudRepository<DailyMenu, Int> {
 
-    fun findByDate(date : String) : DailyMenu
+    fun findByDate(@Param(value = "date") date: String): DailyMenu
 
 }
