@@ -5,6 +5,7 @@ import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -22,6 +23,7 @@ class MenuExtractorService @Autowired constructor(
 ) {
     companion object {
         val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorService::class.java.name)
+        val ID_IS_GENERATED = null
     }
 
     fun extractData() {
@@ -37,17 +39,24 @@ class MenuExtractorService @Autowired constructor(
         val html = Jsoup.connect(dailyMenuSourcePage.url).get()
 
         val extracted = DailyMenu(
-                null,
+                ID_IS_GENERATED,
                 dailyMenuSourcePage.restaurantName,
                 SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now())),
-                html.select(dailyMenuSourcePage.soupsPath ?: "no").map { el -> el.text() },
-                html.select(dailyMenuSourcePage.mainDishesPath ?: "no").map { el -> el.text() },
-                html.select(dailyMenuSourcePage.otherPath ?: "no").map { el -> el.text() }
+                retrieveList(dailyMenuSourcePage.soupsPath, html),
+                retrieveList(dailyMenuSourcePage.mainDishesPath, html),
+                retrieveList(dailyMenuSourcePage.otherPath, html)
         )
 
         LOG.info("Extracted $extracted")
 
         return extracted
+    }
+
+    private fun retrieveList(path: String?, html: Document): List<String> {
+        if (path != null && !path.equals("")) {
+            return html.select(path).map { el -> el.text() }
+        }
+        return emptyList()
     }
 
 }
