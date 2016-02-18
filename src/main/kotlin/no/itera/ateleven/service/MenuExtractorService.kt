@@ -20,8 +20,9 @@ class MenuExtractorService @Autowired constructor(
         val dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
         val dailyMenuRepository: DailyMenuRepository
 ) {
-
-    private val log: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorService::class.qualifiedName)
+    companion object {
+        val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorService::class.java.name)
+    }
 
     fun extractData() {
         val sourceConfig = dailyMenuSourcePageRepository.findAll()
@@ -44,7 +45,7 @@ class MenuExtractorService @Autowired constructor(
                 html.select(dailyMenuSourcePage.otherPath ?: "no").map { el -> el.text() }
         )
 
-        log.info("Extracted $extracted")
+        LOG.info("Extracted $extracted")
 
         return extracted
     }

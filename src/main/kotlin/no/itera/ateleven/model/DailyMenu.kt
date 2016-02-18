@@ -6,7 +6,7 @@ import javax.persistence.*
  * Created by Pavol Rajzak, Itera.
  */
 @Entity
-@Table(uniqueConstraints = arrayOf(UniqueConstraint(name = "unique_date", columnNames = arrayOf("date"))))
+@Table(uniqueConstraints = arrayOf(UniqueConstraint(name = "unique_date_and_restaurant", columnNames = arrayOf("date", "restaurantName"))))
 data class DailyMenu(
         @Id @GeneratedValue val id: Int?,
         val restaurantName: String,

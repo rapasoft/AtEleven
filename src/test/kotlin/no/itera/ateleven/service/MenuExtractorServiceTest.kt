@@ -1,7 +1,5 @@
 package no.itera.ateleven.service
 
-import no.itera.ateleven.Application
-import no.itera.ateleven.config.SwaggerConfig
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.repository.DailyMenuRepository
@@ -22,7 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner::class)
 @WebAppConfiguration
 @ContextConfiguration(classes = arrayOf(TestApplication::class))
-open public class MenuExtractorServiceTest {
+open class MenuExtractorServiceTest {
 
     @Autowired lateinit private var menuExtractorService: MenuExtractorService
     @Autowired lateinit private var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository
