@@ -29,8 +29,16 @@ class MenuExtractorService @Autowired constructor(
     fun extractData() {
         val sourceConfig = dailyMenuSourcePageRepository.findAll()
 
-        sourceConfig.forEach { sc -> dailyMenuRepository.save(extract(sc)) }
+        sourceConfig.forEach {
+            sc ->
+            if (dailyMenuRepository.findByDateAndRestaurantName(currentDate(), sc.restaurantName).isEmpty()) {
+                dailyMenuRepository.save(extract(sc))
+            } else {
+                LOG.warn("Menu already exists for ${currentDate()} and ${sc.restaurantName}")
+            }
+        }
     }
+
 
     fun extract(dailyMenuSourcePage: DailyMenuSourcePage?): DailyMenu {
         if (dailyMenuSourcePage == null)
@@ -41,7 +49,7 @@ class MenuExtractorService @Autowired constructor(
         val extracted = DailyMenu(
                 ID_IS_GENERATED,
                 dailyMenuSourcePage.restaurantName,
-                SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now())),
+                currentDate(),
                 retrieveList(dailyMenuSourcePage.soupsPath, html),
                 retrieveList(dailyMenuSourcePage.mainDishesPath, html),
                 retrieveList(dailyMenuSourcePage.otherPath, html)
@@ -51,6 +59,8 @@ class MenuExtractorService @Autowired constructor(
 
         return extracted
     }
+
+    private fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
 
     private fun retrieveList(path: String?, html: Document): List<String> {
         if (path != null && !path.equals("")) {

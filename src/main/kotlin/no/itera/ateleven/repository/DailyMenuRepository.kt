@@ -11,6 +11,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource(collectionResourceRel = "daily-menu", path = "daily-menu")
 interface DailyMenuRepository : CrudRepository<DailyMenu, Int> {
 
-    fun findByDate(@Param(value = "date") date: String): DailyMenu
+    fun findByDate(@Param(value = "date") date: String): List<DailyMenu>
+
+    fun findByDateAndRestaurantName(@Param(value = "date") date: String, @Param(value = "restaurantName") restaurantName: String): List<DailyMenu>
 
 }

@@ -10,7 +10,7 @@ import javax.persistence.*
 data class DailyMenu(
         @Id @GeneratedValue val id: Int?,
         val restaurantName: String,
-        @Column(unique = true) val date: String,
+        val date: String,
         @ElementCollection val soups: List<String>,
         @ElementCollection val mainDishes: List<String>,
         @ElementCollection val other: List<String>) {
