@@ -2,6 +2,7 @@ package no.itera.ateleven.repository
 
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.model.DailyMenu
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -22,15 +23,14 @@ class DailyMenuRepositoryTest {
 
     @Autowired lateinit var dailyMenuRepository: DailyMenuRepository
 
+    @After
+    fun after() {
+        dailyMenuRepository.deleteAll()
+    }
+
     @Test
     fun shouldSaveDailyMenu() {
-        var dailyMenu = DailyMenu(
-                null,
-                "Test",
-                "2016-01-18",
-                Arrays.asList("Mrkvova", "Cicerova"),
-                Arrays.asList("Hovadzi gulas", "Slovenske rizoto"),
-                emptyList<String>())
+        var dailyMenu = TestApplication.dailyMenuMock
 
         dailyMenu = dailyMenuRepository.save(dailyMenu)
 

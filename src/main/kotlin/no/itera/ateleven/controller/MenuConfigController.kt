@@ -3,6 +3,7 @@ package no.itera.ateleven.controller
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.service.MenuExtractorService
+import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestBody
@@ -26,6 +27,5 @@ class MenuExtractorController @Autowired constructor(val menuExtractorService: M
     fun extractAll() {
         menuExtractorService.extractData()
     }
-
 
 }

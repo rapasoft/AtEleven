@@ -2,71 +2,16 @@ package no.itera.ateleven.service
 
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
-import no.itera.ateleven.repository.DailyMenuRepository
-import no.itera.ateleven.repository.DailyMenuSourcePageRepository
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.util.*
+import org.springframework.scheduling.annotation.Async
+import org.springframework.scheduling.annotation.Scheduled
+import javax.transaction.Transactional
 
 /**
  * Created by Pavol Rajzak, Itera.
  */
-@Service
-class MenuExtractorService @Autowired constructor(
-        val dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
-        val dailyMenuRepository: DailyMenuRepository
-) {
-    companion object {
-        val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorService::class.java.name)
-        val ID_IS_GENERATED = null
-    }
+interface MenuExtractorService {
 
-    fun extractData() {
-        val sourceConfig = dailyMenuSourcePageRepository.findAll()
+    open fun extractData()
 
-        sourceConfig.forEach {
-            sc ->
-            if (dailyMenuRepository.findByDateAndRestaurantName(currentDate(), sc.restaurantName).isEmpty()) {
-                dailyMenuRepository.save(extract(sc))
-            } else {
-                LOG.warn("Menu already exists for ${currentDate()} and ${sc.restaurantName}")
-            }
-        }
-    }
-
-
-    fun extract(dailyMenuSourcePage: DailyMenuSourcePage?): DailyMenu {
-        if (dailyMenuSourcePage == null)
-            throw IllegalArgumentException("Parameters are $dailyMenuSourcePage")
-
-        val html = Jsoup.connect(dailyMenuSourcePage.url).get()
-
-        val extracted = DailyMenu(
-                ID_IS_GENERATED,
-                dailyMenuSourcePage.restaurantName,
-                currentDate(),
-                retrieveList(dailyMenuSourcePage.soupsPath, html),
-                retrieveList(dailyMenuSourcePage.mainDishesPath, html),
-                retrieveList(dailyMenuSourcePage.otherPath, html)
-        )
-
-        LOG.info("Extracted $extracted")
-
-        return extracted
-    }
-
-    private fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
-
-    private fun retrieveList(path: String?, html: Document): List<String> {
-        if (path != null && !path.equals("")) {
-            return html.select(path).map { el -> el.text() }
-        }
-        return emptyList()
-    }
-
+    open fun extract(dailyMenuSourcePage: DailyMenuSourcePage?): DailyMenu
 }

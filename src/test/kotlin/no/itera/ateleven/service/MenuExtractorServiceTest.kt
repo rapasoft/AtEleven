@@ -1,11 +1,12 @@
 package no.itera.ateleven.service
 
 import no.itera.ateleven.config.TestApplication
+import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,6 +40,11 @@ open class MenuExtractorServiceTest {
         )
     }
 
+    @After
+    fun after() {
+        dailyMenuRepository.deleteAll()
+    }
+
     @Test
     fun testExtractData() {
         menuExtractorService.extractData();
@@ -46,7 +52,31 @@ open class MenuExtractorServiceTest {
         val dailyMenus = dailyMenuRepository.findAll()
 
         assertNotNull(dailyMenus);
-        assertEquals(1, dailyMenus.first().id)
+        assertEquals(1, dailyMenus.toList().size)
+    }
+
+    @Test
+    fun testExtractAndUpdateData() {
+        dailyMenuRepository.save(
+                DailyMenu(
+                        MenuExtractorServiceImpl.ID_IS_GENERATED,
+                        "Astra Pub Ruzinov",
+                        MenuExtractorServiceImpl.currentDate(),
+                        arrayListOf("Drztkova", "Hubickova"),
+                        arrayListOf("Szegin", "Gulas", "Salat", "Kura s ryzou"),
+                        emptyList()
+                )
+        )
+
+        val dailyMenusOld = dailyMenuRepository.findAll()
+
+        menuExtractorService.extractData()
+
+        val dailyMenusUpdated = dailyMenuRepository.findAll()
+
+        assertNotEquals(dailyMenusOld, dailyMenusUpdated)
+
+        dailyMenuRepository.deleteAll()
     }
 
 }

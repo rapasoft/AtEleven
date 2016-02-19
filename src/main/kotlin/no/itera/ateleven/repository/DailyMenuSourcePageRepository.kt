@@ -2,11 +2,11 @@ package no.itera.ateleven.repository
 
 import no.itera.ateleven.model.DailyMenuSourcePage
 import org.springframework.data.repository.CrudRepository
-import org.springframework.data.rest.core.annotation.RepositoryRestResource
+import org.springframework.stereotype.Repository
 
 /**
  * Created by Pavol Rajzak, Itera.
  */
-@RepositoryRestResource(collectionResourceRel = "menu-config", path = "menu-config")
+@Repository
 interface DailyMenuSourcePageRepository : CrudRepository<DailyMenuSourcePage, String> {
 }

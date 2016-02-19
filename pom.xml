@@ -22,6 +22,7 @@
         <lombok.version>1.16.6</lombok.version>
         <springfox.version>2.3.1</springfox.version>
         <jackson-module-kotlin.version>2.6.4</jackson-module-kotlin.version>
+        <spring-hateoas.version>0.19.0.RELEASE</spring-hateoas.version>
     </properties>
 
     <dependencies>
@@ -50,10 +51,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
@@ -72,6 +69,11 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>${spring-hateoas.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
