@@ -2,6 +2,7 @@ package no.itera.ateleven.controller
 
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.repository.DailyMenuRepository
+import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,6 +21,9 @@ class DailyMenuController @Autowired constructor(val dailyMenuRepository: DailyM
     companion object {
         val LOG : Logger = LoggerFactory.getLogger(DailyMenuController::class.java.name)
     }
+
+    @RequestMapping
+    fun get() = dailyMenuRepository.findByDate(MenuExtractorServiceImpl.currentDate())
 
     @RequestMapping(path = arrayOf("/{date}"))
     fun findByDate(@PathVariable date: String): List<DailyMenu> {

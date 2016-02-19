@@ -8,13 +8,12 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import java.net.SocketTimeoutException
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
-import javax.transaction.Transactional
 
 /**
  * Created by Pavol Rajzak, Itera.
@@ -58,7 +57,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         if (dailyMenuSourcePage == null)
             throw IllegalArgumentException("Parameters are $dailyMenuSourcePage")
 
-        val html = Jsoup.connect(dailyMenuSourcePage.url).get()
+        val html = fetchPageWithReconnects(dailyMenuSourcePage, 3)
 
         val extracted = DailyMenu(
                 ID_IS_GENERATED,
@@ -72,6 +71,19 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         LOG.info("Extracted $extracted")
 
         return extracted
+    }
+
+    private fun fetchPageWithReconnects(dailyMenuSourcePage: DailyMenuSourcePage, retries: Int): Document {
+        try {
+            return Jsoup.connect(dailyMenuSourcePage.url).get()
+        } catch(e: SocketTimeoutException) {
+            LOG.warn("Failed to download from ${dailyMenuSourcePage.url}, $retries more retries left")
+            if (retries > 0) {
+                return fetchPageWithReconnects(dailyMenuSourcePage, retries - 1)
+            } else {
+                throw e
+            }
+        }
     }
 
     private fun retrieveList(path: String?, html: Document): List<String> {

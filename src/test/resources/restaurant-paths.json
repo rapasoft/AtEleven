@@ -21,10 +21,10 @@
     "url": "https://www.zomato.com/bratislava/sit-eat-ru%C5%BEinov-bratislava-ii/menu"
   },
   {
-    "mainDishesPath": "#menu-preview > div.tmi-groups > div.tmi-group > div:gt(1) > div:eq(0)",
+    "mainDishesPath": "#menu-preview > div.tmi-groups > div.tmi-group:eq(0) > div:gt(1) > div:eq(0)",
     "otherPath": "string",
     "restaurantName": "Buddies",
-    "soupsPath": "#menu-preview > div.tmi-groups > div.tmi-group > div:nth-child(2) > div.tmi-text-group > div",
+    "soupsPath": "#menu-preview > div.tmi-groups > div.tmi-group:eq(0) > div:nth-child(2) > div.tmi-text-group > div",
     "url": "https://www.zomato.com/bratislava/buddies-ru%C5%BEinov-bratislava-ii/menu#daily"
   },
   {
@@ -33,5 +33,12 @@
     "restaurantName": "La Strada",
     "soupsPath": "#menu-preview > div > div.tmi-group > div:nth-child(2) > div.tmi-text-group",
     "url": "https://www.zomato.com/bratislava/la-strada-ristorante-ru%C5%BEinov-bratislava-ii/menu#daily"
+  },
+  {
+    "mainDishesPath": "#putac1 > div.dm-popis",
+    "otherPath": "string",
+    "restaurantName": "Bigger",
+    "soupsPath": "#putac1 > div.tovarname2 > a",
+    "url": "http://www.bigger.sk/"
   }
 ]
