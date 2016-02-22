@@ -18,8 +18,8 @@ open class InitialMenuConfiguration {
 
     @Autowired lateinit var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository
 
-    @Bean
-    open fun initDefaultMenuConfiguration(): Boolean {
+    @Bean(name = arrayOf("defaultMenuConfigurationInitialized"))
+    open fun defaultMenuConfiguration(): Boolean {
         val objectMapper: ObjectMapper = ObjectMapper()
         val typeFactory = TypeFactory.defaultInstance()
 
