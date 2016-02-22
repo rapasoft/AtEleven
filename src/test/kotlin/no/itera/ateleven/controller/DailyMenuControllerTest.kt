@@ -4,6 +4,7 @@ import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.hamcrest.Matchers
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +35,12 @@ class DailyMenuControllerTest {
     @Before
     fun before() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build()
-        dailyMenuRepository.save(TestApplication.dailyMenuMock)
+        dailyMenuRepository.save(TestApplication.dailyMenuMock())
+    }
+
+    @After
+    fun after() {
+        dailyMenuRepository.deleteAll()
     }
 
     @Test

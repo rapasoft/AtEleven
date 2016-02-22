@@ -3,7 +3,6 @@ package no.itera.ateleven.repository
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.model.DailyMenu
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,13 +29,12 @@ class DailyMenuRepositoryTest {
 
     @Test
     fun shouldSaveDailyMenu() {
-        var dailyMenu = TestApplication.dailyMenuMock
+        var dailyMenu = TestApplication.dailyMenuMock()
 
         dailyMenu = dailyMenuRepository.save(dailyMenu)
 
         assertNotNull(dailyMenu)
         assertNotNull(dailyMenu.id)
-        assertEquals(1f, dailyMenu.id!!.toFloat(), 0f)
     }
 
     @Test(expected = Exception::class)

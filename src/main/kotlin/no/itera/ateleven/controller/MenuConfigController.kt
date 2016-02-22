@@ -22,7 +22,7 @@ class MenuConfigController @Autowired constructor(val dailyMenuSourcePageReposit
 
     @RequestMapping(method = arrayOf(RequestMethod.GET))
     fun getAll(): ResponseEntity<List<DailyMenuSourcePage>> {
-        return ResponseEntity.ok(dailyMenuSourcePageRepository.findAll().toArrayList());
+        return ResponseEntity.ok(dailyMenuSourcePageRepository.findAll().toList());
     }
 
     @RequestMapping(method = arrayOf(RequestMethod.GET), path = arrayOf("{name}"))

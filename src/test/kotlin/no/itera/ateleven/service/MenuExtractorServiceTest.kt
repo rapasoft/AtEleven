@@ -47,12 +47,13 @@ open class MenuExtractorServiceTest {
 
     @Test
     fun testExtractData() {
+        dailyMenuRepository.deleteAll()
         menuExtractorService.extractData();
 
         val dailyMenus = dailyMenuRepository.findAll()
 
         assertNotNull(dailyMenus);
-        assertEquals(1, dailyMenus.toList().size)
+        assertTrue(dailyMenus.toList().size > 1)
     }
 
     @Test

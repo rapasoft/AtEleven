@@ -4,7 +4,6 @@ package no.itera.ateleven.config
  * Created by Pavol Rajzak, Itera.
  */
 import no.itera.ateleven.model.DailyMenu
-import no.itera.ateleven.service.MenuExtractorService
 import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.springframework.boot.SpringApplication
 import org.springframework.context.annotation.ComponentScan
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan.Filter
 import org.springframework.context.annotation.FilterType
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.stereotype.Controller
-import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
@@ -25,7 +23,7 @@ import java.util.*
         Filter(pattern = arrayOf(".*SwaggerConfig"), type = FilterType.REGEX)))
 open class TestApplication {
     companion object {
-        val dailyMenuMock : DailyMenu = DailyMenu(
+        fun dailyMenuMock() = DailyMenu(
                 null,
                 "Test" + (Math.random() * 100).toInt(),
                 MenuExtractorServiceImpl.currentDate(),
