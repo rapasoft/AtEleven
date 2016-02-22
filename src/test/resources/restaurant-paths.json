@@ -7,17 +7,17 @@
     "url": "https://www.zomato.com/widgets/daily_menu?entity_id=16508164"
   },
   {
-    "mainDishesPath": "body > div.body_wrapper > div.site_wrapper > div.content > div.left_panel > div > div:nth-child(4) > div:nth-child(1) > div > p > span:gt(3)",
+    "mainDishesPath": "#menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:gt(3) > div:eq(0)",
     "otherPath": "string",
     "restaurantName": "Journal",
-    "soupsPath": "body > div.body_wrapper > div.site_wrapper > div.content > div.left_panel > div > div:nth-child(4) > div:nth-child(1) > div > p > span:eq(1), body > div.body_wrapper > div.site_wrapper > div.content > div.left_panel > div > div:nth-child(4) > div:nth-child(1) > div > p > span:eq(2)",
-    "url": "http://restauracie.sme.sk/restauracia/journal-restaurant_5618-ruzinov_2980/denne-menu"
+    "soupsPath": "#menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:eq(3) > div:eq(0), #menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:eq(2) > div:eq(0)",
+    "url": "https://www.zomato.com/sk/bratislava/journal-restaurant-ru%C5%BEinov-bratislava-ii/menu#daily"
   },
   {
-    "mainDishesPath": "#menu-preview > div > div.tmi-group > div.tmi-daily:gt(2) > div:eq(0)",
+    "mainDishesPath": "#menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:gt(2) > div:eq(0)",
     "otherPath": "string",
     "restaurantName": "Sit and Eat",
-    "soupsPath": "#menu-preview > div > div.tmi-group > div.tmi-daily:lt(3) > div:eq(0)",
+    "soupsPath": "#menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:lt(3) > div:eq(0)",
     "url": "https://www.zomato.com/bratislava/sit-eat-ru%C5%BEinov-bratislava-ii/menu"
   },
   {
@@ -28,10 +28,10 @@
     "url": "https://www.zomato.com/bratislava/buddies-ru%C5%BEinov-bratislava-ii/menu#daily"
   },
   {
-    "mainDishesPath": "#menu-preview > div > div.tmi-group > div:gt(1) > div:eq(0)",
+    "mainDishesPath": "#menu-preview > div > div.tmi-group:eq(0) > div:gt(1) > div:eq(0)",
     "otherPath": "string",
     "restaurantName": "La Strada",
-    "soupsPath": "#menu-preview > div > div.tmi-group > div:nth-child(2) > div.tmi-text-group",
+    "soupsPath": "#menu-preview > div > div.tmi-group:eq(0) > div:nth-child(2) > div.tmi-text-group",
     "url": "https://www.zomato.com/bratislava/la-strada-ristorante-ru%C5%BEinov-bratislava-ii/menu#daily"
   },
   {

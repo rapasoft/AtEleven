@@ -3,7 +3,6 @@ package no.itera.ateleven.controller
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.service.MenuExtractorService
-import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 class MenuExtractorController @Autowired constructor(val menuExtractorService: MenuExtractorService) {
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun testMenuExtraction(@RequestBody dailyMenuSourcePage: DailyMenuSourcePage): ResponseEntity<DailyMenu> {
+    fun addMenuConfiguration(@RequestBody dailyMenuSourcePage: DailyMenuSourcePage): ResponseEntity<DailyMenu> {
         return ResponseEntity.ok(menuExtractorService.extract(dailyMenuSourcePage))
     }
 
