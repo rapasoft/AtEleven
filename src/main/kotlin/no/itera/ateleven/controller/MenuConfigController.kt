@@ -1,30 +1,22 @@
 package no.itera.ateleven.controller
 
-import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
-import no.itera.ateleven.service.MenuExtractorService
+import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 /**
  * Created by Pavol Rajzak, Itera.
  */
 @RestController
-@RequestMapping(path = arrayOf("extractor"))
-class MenuExtractorController @Autowired constructor(val menuExtractorService: MenuExtractorService) {
+@RequestMapping(path = arrayOf("config"))
+class MenuConfigController @Autowired constructor(val dailyMenuSourcePageRepository: DailyMenuSourcePageRepository) {
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun addMenuConfiguration(@RequestBody dailyMenuSourcePage: DailyMenuSourcePage): ResponseEntity<DailyMenu> {
-        return ResponseEntity.ok(menuExtractorService.extract(dailyMenuSourcePage))
-    }
-
-    @RequestMapping(method = arrayOf(RequestMethod.GET))
-    fun extractAll() {
-        menuExtractorService.extractData()
+    @ResponseStatus(HttpStatus.OK)
+    fun testMenuExtraction(@RequestBody dailyMenuSourcePages: List<DailyMenuSourcePage>) {
+        dailyMenuSourcePageRepository.save(dailyMenuSourcePages);
     }
 
 }
