@@ -42,7 +42,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
 
             if (menusForRestaurantAndDate.isEmpty()) {
                 dailyMenuRepository.save(extracted)
-            } else if (menusForRestaurantAndDate.size == 1 && !menusForRestaurantAndDate[0].equals(extracted)) {
+            } else if (menusForRestaurantAndDate.size == 1 && !menusForRestaurantAndDate[0].menuEquals(extracted)) {
                 LOG.info("There was a change in menu for ${currentDate()} and ${sc.restaurantName}, updating the menu now.")
                 dailyMenuRepository.delete(menusForRestaurantAndDate[0])
                 dailyMenuRepository.save(extracted)

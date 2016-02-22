@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.concurrent.Callable
 
 /**
  * Created by Pavol Rajzak, Itera.
@@ -20,10 +21,13 @@ class MenuExtractorController @Autowired constructor(val menuExtractorService: M
         return ResponseEntity.ok(menuExtractorService.extract(dailyMenuSourcePage))
     }
 
-    @RequestMapping(method = arrayOf(RequestMethod.GET))
-    @ResponseStatus(HttpStatus.OK)
-    fun extractAll() {
-        menuExtractorService.extractData()
+    @RequestMapping(method = arrayOf(RequestMethod.POST), path = arrayOf("extract"))
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    fun extractAll(): Callable<String> {
+        return Callable {
+            menuExtractorService.extractData()
+            "Extraction finished"
+        }
     }
 
 }
