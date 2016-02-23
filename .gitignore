@@ -23,6 +23,8 @@ $RECYCLE.BIN/
 
 
 ### Intellij ###
+/src/main/frontend/node_modules
+/src/main/frontend/app/bower_components
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
 *.iml

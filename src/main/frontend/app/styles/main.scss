@@ -1,0 +1,22 @@
+$icon-font-path: "/fonts/bootstrap/";
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+body {
+  padding: 10px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.daily-menu-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 100%;
+
+  .menu-item {
+    width: 300px;
+  }
+}

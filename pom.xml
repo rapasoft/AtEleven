@@ -23,6 +23,9 @@
         <springfox.version>2.3.1</springfox.version>
         <jackson-module-kotlin.version>2.6.4</jackson-module-kotlin.version>
         <spring-hateoas.version>0.19.0.RELEASE</spring-hateoas.version>
+        <frontend-maven-plugin.version>0.0.28</frontend-maven-plugin.version>
+        <frontend-maven-plugin.nodeVersion>v0.12.10</frontend-maven-plugin.nodeVersion>
+        <frontend-maven-plugin.npmVersion>2.14.9</frontend-maven-plugin.npmVersion>
     </properties>
 
     <dependencies>
@@ -80,10 +83,66 @@
             <artifactId>jackson-module-kotlin</artifactId>
             <version>${jackson-module-kotlin.version}</version>
         </dependency>
+
+
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+                <configuration>
+                    <workingDirectory>src/main/js</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                            <npmVersion>${frontend-maven-plugin.npmVersion}</npmVersion>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bower install</id>
+                        <goals>
+                            <goal>bower</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>gulp build</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>build</arguments>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -115,6 +174,28 @@
                             <sourceDirs>
                                 <source>src/test/kotlin</source>
                             </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/js/dist</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>

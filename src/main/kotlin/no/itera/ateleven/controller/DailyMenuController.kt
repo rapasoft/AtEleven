@@ -6,7 +6,6 @@ import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -32,8 +31,8 @@ class DailyMenuController @Autowired constructor(val dailyMenuRepository: DailyM
 
     @ExceptionHandler(value = Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun exceptionHandler(httpRequest: HttpRequest, exception: Exception) {
-        LOG.error("Could not process request ${httpRequest.uri}, the cause is ${exception.cause}")
+    fun exceptionHandler(exception: Exception) {
+        LOG.error("Could not process request, the cause is ${exception.cause}")
     }
 
 }
