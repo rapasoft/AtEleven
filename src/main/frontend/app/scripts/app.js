@@ -1,6 +1,6 @@
 var React = window.React = require('react'),
   mountNode = document.getElementById("app"),
-  HOST = 'http://localhost:8080/';
+  HOST = 'http://' + window.location.host + '/';
 
 var DailyMenuApp = React.createClass({
   getInitialState: function () {
