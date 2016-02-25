@@ -20,6 +20,7 @@ import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 import java.time.LocalDate
+import java.util.*
 
 /**
  * Created by Pavol Rajzak, Itera.
@@ -27,6 +28,16 @@ import java.time.LocalDate
 @Configuration
 @EnableSwagger2
 open class SwaggerConfig {
+
+    companion object {
+        val swaggerProperties = javaClass.getResourceAsStream("/swagger.properties")
+        val properties = Properties()
+
+        fun hostname() : String {
+            properties.load(swaggerProperties)
+            return properties.getProperty("server.hostname")
+        }
+    }
 
     @Autowired
     private lateinit var typeResolver: TypeResolver
@@ -38,6 +49,7 @@ open class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
+                .host(SwaggerConfig.hostname())
                 .pathMapping("/")
                 .directModelSubstitute(LocalDate::class.java, String::class.java)
                 .genericModelSubstitutes(ResponseEntity::class.java).alternateTypeRules(

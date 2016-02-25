@@ -26,6 +26,7 @@
         <frontend-maven-plugin.version>0.0.28</frontend-maven-plugin.version>
         <frontend-maven-plugin.nodeVersion>v0.12.10</frontend-maven-plugin.nodeVersion>
         <frontend-maven-plugin.npmVersion>2.14.9</frontend-maven-plugin.npmVersion>
+        <server.hostname>localhost</server.hostname>
     </properties>
 
     <dependencies>
@@ -201,5 +202,36 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>swagger.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <server.hostname>localhost</server.hostname>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <server.hostname>itesk-dev-002.intra.itera.no</server.hostname>
+            </properties>
+        </profile>
+    </profiles>
 </project>

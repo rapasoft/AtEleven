@@ -20,8 +20,8 @@ import java.util.*
  */
 @Service
 open class MenuExtractorServiceImpl @Autowired constructor(
-        val dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
-        val dailyMenuRepository: DailyMenuRepository
+        var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
+        var dailyMenuRepository: DailyMenuRepository
 ) : MenuExtractorService {
     companion object {
         val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorServiceImpl::class.java.name)
