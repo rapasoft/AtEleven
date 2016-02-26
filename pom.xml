@@ -24,9 +24,9 @@
         <jackson-module-kotlin.version>2.6.4</jackson-module-kotlin.version>
         <spring-hateoas.version>0.19.0.RELEASE</spring-hateoas.version>
         <frontend-maven-plugin.version>0.0.28</frontend-maven-plugin.version>
-        <frontend-maven-plugin.nodeVersion>v0.12.10</frontend-maven-plugin.nodeVersion>
-        <frontend-maven-plugin.npmVersion>2.14.9</frontend-maven-plugin.npmVersion>
-        <server.hostname>localhost</server.hostname>
+        <frontend-maven-plugin.nodeVersion>v4.3.0</frontend-maven-plugin.nodeVersion>
+        <frontend-maven-plugin.npmVersion>3.7.3</frontend-maven-plugin.npmVersion>
+        <server.hostname>localhost:8080</server.hostname>
     </properties>
 
     <dependencies>
@@ -224,7 +224,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <server.hostname>localhost</server.hostname>
+                <server.hostname>localhost:8080</server.hostname>
             </properties>
         </profile>
         <profile>

@@ -8,6 +8,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.net.SocketTimeoutException
@@ -32,6 +33,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
     }
 
     @Scheduled(fixedDelay = HOUR_IN_MS)
+    @Async
     override fun extractData() {
         val sourceConfig = dailyMenuSourcePageRepository.findAll()
 
