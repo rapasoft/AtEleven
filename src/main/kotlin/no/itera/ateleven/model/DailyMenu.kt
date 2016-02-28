@@ -19,6 +19,6 @@ data class DailyMenu(
     fun menuEquals(other: DailyMenu): Boolean =
             soups.equals(other.soups) &&
                     mainDishes.equals(other.mainDishes) &&
-                    other.equals(other.other)
+                    other.other.equals(other.other)
 
 }

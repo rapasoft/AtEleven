@@ -23,11 +23,12 @@ import java.util.*
         Filter(pattern = arrayOf(".*SwaggerConfig"), type = FilterType.REGEX)))
 open class TestApplication {
     companion object {
-        fun dailyMenuMock() = DailyMenu(
+        fun dailyMenuMock(restaurantName: String = "Test" + (Math.random() * 100).toInt(),
+                          soups: List<String> = Arrays.asList("Mrkvova", "Cicerova")) = DailyMenu(
                 null,
-                "Test" + (Math.random() * 100).toInt(),
+                restaurantName,
                 MenuExtractorServiceImpl.currentDate(),
-                Arrays.asList("Mrkvova", "Cicerova"),
+                soups,
                 Arrays.asList("Hovadzi gulas", "Slovenske rizoto"),
                 emptyList<String>())
     }

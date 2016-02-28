@@ -30,7 +30,7 @@ import java.util.*
 open class SwaggerConfig {
 
     companion object {
-        val swaggerProperties = javaClass.getResourceAsStream("/swagger.properties")
+        val swaggerProperties = SwaggerConfig::class.java.getResourceAsStream("/swagger.properties")
         val properties = Properties()
 
         fun hostname() : String {

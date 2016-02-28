@@ -1,22 +1,19 @@
 package no.itera.ateleven.service
 
 import no.itera.ateleven.config.TestApplication
-import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
-import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.springframework.beans.factory.annotation.Autowired
+import org.mockito.Mockito.never
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
+import java.util.*
 
 /**
  * Created by Pavol Rajzak, Itera.
@@ -28,62 +25,70 @@ open class MenuExtractorServiceTest {
 
     lateinit private var menuExtractorService: MenuExtractorServiceImpl
     lateinit private var dailyMenuSourcePage: DailyMenuSourcePage
-    @Autowired lateinit private var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository
-    @Autowired lateinit private var dailyMenuRepository: DailyMenuRepository
+    lateinit private var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository
+    lateinit private var dailyMenuRepository: DailyMenuRepository
+    val dailyMenuMock = TestApplication.dailyMenuMock("TestExtract")
 
     @Before
     fun before() {
         dailyMenuSourcePage = DailyMenuSourcePage(
-                "Astra Pub Ruzinov",
+                "TestExtract",
                 "file://test-page.html",
                 ".soups > soup",
                 ".main-dishes > .main-dish",
                 ".others > other"
         )
-        dailyMenuSourcePageRepository.save(dailyMenuSourcePage)
+
+        dailyMenuRepository = mock(DailyMenuRepository::class.java)
+        dailyMenuSourcePageRepository = mock(DailyMenuSourcePageRepository::class.java)
+
         menuExtractorService = mock(MenuExtractorServiceImpl::class.java)
         menuExtractorService.dailyMenuRepository = dailyMenuRepository
         menuExtractorService.dailyMenuSourcePageRepository = dailyMenuSourcePageRepository
+
+        Mockito.`when`(dailyMenuSourcePageRepository.findAll()).thenReturn(mockIterable(dailyMenuSourcePage))
         Mockito.`when`(menuExtractorService.extractData()).thenCallRealMethod()
-        Mockito.`when`(menuExtractorService.extract(Mockito.any(DailyMenuSourcePage::class.java))).thenReturn(TestApplication.dailyMenuMock())
+        Mockito.`when`(menuExtractorService.extract(Mockito.any(DailyMenuSourcePage::class.java))).thenReturn(dailyMenuMock)
     }
 
-    @After
-    fun after() {
-        dailyMenuRepository.deleteAll()
+    private fun mockIterable(dailyMenuSourcePage: DailyMenuSourcePage): Iterable<DailyMenuSourcePage>? {
+        return Iterable({ Collections.singletonList(dailyMenuSourcePage).iterator() })
     }
 
     @Test
     fun testExtractData() {
-        dailyMenuRepository.deleteAll()
         menuExtractorService.extractData();
-        Mockito.verify(menuExtractorService).extract(dailyMenuSourcePage)
 
-        assertFalse(dailyMenuRepository.findByDate(MenuExtractorServiceImpl.currentDate()).isEmpty());
+        Mockito.verify(menuExtractorService).extract(dailyMenuSourcePage)
+        Mockito.verify(menuExtractorService.dailyMenuRepository).save(dailyMenuMock)
     }
 
     @Test
     fun testExtractAndUpdateData() {
-        dailyMenuRepository.save(
-                DailyMenu(
-                        MenuExtractorServiceImpl.ID_IS_GENERATED,
-                        "Astra Pub Ruzinov",
-                        MenuExtractorServiceImpl.currentDate(),
-                        arrayListOf("Drztkova", "Hubickova"),
-                        arrayListOf("Szegin", "Gulas", "Salat", "Kura s ryzou"),
-                        emptyList()
-                )
+        val replacement = TestApplication.dailyMenuMock("TestExtract", Collections.singletonList("IbaDrzkova"))
+        Mockito.`when`(dailyMenuRepository.findByDateAndRestaurantName(MenuExtractorServiceImpl.currentDate(), "TestExtract")).thenReturn(
+                Collections.singletonList(dailyMenuMock)
         )
+        Mockito.`when`(menuExtractorService.extract(dailyMenuSourcePage)).thenReturn(replacement)
 
-        val dailyMenusOld = dailyMenuRepository.findAll()
+        menuExtractorService.extractData();
 
-        menuExtractorService.extractData()
+        Mockito.verify(menuExtractorService).extract(dailyMenuSourcePage)
+        Mockito.verify(menuExtractorService.dailyMenuRepository).delete(dailyMenuMock)
+        Mockito.verify(menuExtractorService.dailyMenuRepository).save(replacement)
+    }
 
-        val dailyMenusUpdated = dailyMenuRepository.findAll()
+    @Test
+    fun testDoNotUpdateWhenNoDataChanged() {
+        Mockito.`when`(dailyMenuRepository.findByDateAndRestaurantName(MenuExtractorServiceImpl.currentDate(), "TestExtract")).thenReturn(
+                Collections.singletonList(dailyMenuMock)
+        )
+        Mockito.`when`(menuExtractorService.extract(dailyMenuSourcePage)).thenReturn(dailyMenuMock)
 
-        assertNotEquals(dailyMenusOld, dailyMenusUpdated)
+        menuExtractorService.extractData();
 
-        dailyMenuRepository.deleteAll()
+        Mockito.verify(menuExtractorService).extract(dailyMenuSourcePage)
+        Mockito.verify(menuExtractorService.dailyMenuRepository, never()).save(dailyMenuMock)
     }
 
 }
