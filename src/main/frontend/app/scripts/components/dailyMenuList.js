@@ -1,4 +1,5 @@
 import React from 'react'
+import DailyMenuItem from './dailyMenuItem'
 
 export default class DailyMenuList extends React.Component {
   render() {
