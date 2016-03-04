@@ -16,8 +16,8 @@ class MenuConfigController @Autowired constructor(val dailyMenuSourcePageReposit
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMenuConfiguration(@RequestBody dailyMenuSourcePages: List<DailyMenuSourcePage>) {
-        dailyMenuSourcePageRepository.save(dailyMenuSourcePages);
+    fun addMenuConfiguration(@RequestBody dailyMenuSourcePages: List<DailyMenuSourcePage>): Iterable<DailyMenuSourcePage> {
+        return dailyMenuSourcePageRepository.save(dailyMenuSourcePages);
     }
 
     @RequestMapping(method = arrayOf(RequestMethod.GET))

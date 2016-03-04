@@ -40,5 +40,11 @@
     "restaurantName": "Bigger",
     "soupsPath": "#putac1 > div.tovarname2 > a",
     "url": "http://www.bigger.sk/"
+  },
+  {
+    "mainDishesPath": "#menu-preview > div > div:nth-child(1) > div:nth-child(3) > div.tmi-text-group > div, #menu-preview > div > div:nth-child(1) > div:nth-child(4), #menu-preview > div > div:nth-child(1) > div:nth-child(5), #menu-preview > div > div:nth-child(1) > div:nth-child(6)",
+    "restaurantName": "Hamka",
+    "soupsPath": "#menu-preview > div > div:nth-child(1) > div:nth-child(2) > div.tmi-text-group > div",
+    "url": "https://www.zomato.com/sk/bratislava/hamka-rozvoz-obedov-nov%C3%A9-mesto-bratislava-iii/menu#daily"
   }
 ]
