@@ -1,7 +1,9 @@
 {
   "name": "frontend",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^0.13.2"
+  },
   "devDependencies": {
     "babelify": "^6.0.2",
     "bower": "^1.7.7",
@@ -21,7 +23,6 @@
     "gulp-useref": "^1.1.1",
     "gulp-util": "^3.0.3",
     "gulp-webserver": "^0.9.0",
-    "react": "^0.13.2",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.3.0"
   },

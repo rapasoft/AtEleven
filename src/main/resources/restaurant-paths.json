@@ -46,5 +46,11 @@
     "restaurantName": "Hamka",
     "soupsPath": "#menu-preview > div > div:nth-child(1) > div:nth-child(2) > div.tmi-text-group > div",
     "url": "https://www.zomato.com/sk/bratislava/hamka-rozvoz-obedov-nov%C3%A9-mesto-bratislava-iii/menu#daily"
+  },
+  {
+    "mainDishesPath": "#menu-preview > div.tmi-groups > div:nth-child(1) > div:gt(1) > div.tmi-text-group > div",
+    "restaurantName": "Delfin",
+    "soupsPath": "#menu-preview > div.tmi-groups > div:nth-child(1) > div:nth-child(2) > div.tmi-text-group > div",
+    "url": "https://www.zomato.com/bratislava/delf%C3%ADn-ru%C5%BEinov-bratislava-ii/menu#daily"
   }
 ]

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 var RenderList = React.createClass({
   render: function () {
@@ -24,14 +24,16 @@ var RenderList = React.createClass({
 export default class DailyMenuItem extends React.Component {
   render() {
     return (
-      <div className="menu-item">
-        <h3>{this.props.restaurantName}</h3>
-        <h4>Soups</h4>
-        <RenderList data={this.props.soups}/>
-        <h4>Main Dishes</h4>
-        <RenderList data={this.props.mainDishes}/>
-        <h4>Other</h4>
-        <RenderList data={this.props.other}/>
+      <div className="menu-item panel panel-default">
+        <div className="panel-heading">{this.props.restaurantName}</div>
+        <div className="panel-body">
+          <h4>Soups</h4>
+          <RenderList data={this.props.soups}/>
+          <h4>Main Dishes</h4>
+          <RenderList data={this.props.mainDishes}/>
+          {this.props.other.length > 0 && <h4>Other</h4> }
+          {this.props.other.length > 0 && <RenderList data={this.props.other}/>}
+        </div>
       </div>
     );
   }
