@@ -4,6 +4,7 @@ package no.itera.ateleven.config
  * Created by Pavol Rajzak, Itera.
  */
 import no.itera.ateleven.model.DailyMenu
+import no.itera.ateleven.model.Food
 import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.springframework.boot.SpringApplication
 import org.springframework.context.annotation.ComponentScan
@@ -24,13 +25,13 @@ import java.util.*
 open class TestApplication {
     companion object {
         fun dailyMenuMock(restaurantName: String = "Test" + (Math.random() * 100).toInt(),
-                          soups: List<String> = Arrays.asList("Mrkvova", "Cicerova")) = DailyMenu(
+                          soups: List<Food> = Arrays.asList(Food("Mrkvova", ""), Food("Cicerova", ""))) = DailyMenu(
                 null,
                 restaurantName,
                 MenuExtractorServiceImpl.currentDate(),
                 soups,
-                Arrays.asList("Hovadzi gulas", "Slovenske rizoto"),
-                emptyList<String>())
+                Arrays.asList(Food("Hovadzi gulas", ""), Food("Slovenske rizoto", "")),
+                emptyList<Food>())
     }
 }
 

@@ -10,14 +10,6 @@ nav {
     font-size: 18px;
     font-weight: bold;
   }
-  h1 {
-    float: left;
-    margin-left: 10px;
-  }
-  h2 {
-    float: right;
-    margin-right: 10px;
-  }
 }
 
 html, body, #app, .main {
@@ -41,7 +33,40 @@ html, body, #app, .main {
     li {
       margin-left: -30px;
     }
+    span.category {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      font-size: 10px;
+      text-align: center;
+      font-weight: 600;
+      border-radius: 15px;
+      margin-right: 2px;
+    }
+  }
+}
 
+.legend {
+  text-align: center;
+  span {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 3px;
+  }
+}
+
+.selected-restaurants {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  justify-items: left;
+  flex-wrap: wrap;
+  height: 54px;
+
+  label {
+    margin: 0;
+    display: inline-block;
   }
 }
 

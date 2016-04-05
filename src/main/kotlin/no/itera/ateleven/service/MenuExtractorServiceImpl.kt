@@ -1,7 +1,11 @@
 package no.itera.ateleven.service
 
+import no.itera.ateleven.filter.DailyMenuFilter
+import no.itera.ateleven.filter.FoodAnnotationFilter
+import no.itera.ateleven.filter.NameSanitizerFilter
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
+import no.itera.ateleven.model.Food
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import org.jsoup.Jsoup
@@ -24,13 +28,20 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
         var dailyMenuRepository: DailyMenuRepository
 ) : MenuExtractorService {
+
     companion object {
         val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorServiceImpl::class.java.name)
         val ID_IS_GENERATED = null
         const val HOUR_IN_MS: Long = 1000 * 60 * 60
+        const val NO_CATEGORY: String = "empty"
 
         fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
     }
+
+    val dailyMenuFilters: List<DailyMenuFilter> = arrayListOf(
+            NameSanitizerFilter(),
+            FoodAnnotationFilter()
+    )
 
     @Scheduled(fixedDelay = HOUR_IN_MS)
     @Async
@@ -61,7 +72,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
 
         val html = fetchPageWithReconnects(dailyMenuSourcePage, 3)
 
-        val extracted = DailyMenu(
+        var extracted = DailyMenu(
                 ID_IS_GENERATED,
                 dailyMenuSourcePage.restaurantName,
                 currentDate(),
@@ -71,6 +82,8 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         )
 
         LOG.info("Extracted $extracted")
+
+        dailyMenuFilters.forEach { d -> extracted = d.filter(extracted) }
 
         return extracted
     }
@@ -88,9 +101,9 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         }
     }
 
-    private fun retrieveList(path: String?, html: Document): List<String> {
+    private fun retrieveList(path: String?, html: Document): List<Food> {
         if (path != null && !path.equals("")) {
-            return html.select(path).map { el -> el.text() }
+            return html.select(path).map { el -> Food(el.text(), NO_CATEGORY) }
         }
         return emptyList()
     }

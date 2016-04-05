@@ -2,6 +2,7 @@ package no.itera.ateleven.repository
 
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.model.DailyMenu
+import no.itera.ateleven.model.Food
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -43,17 +44,17 @@ class DailyMenuRepositoryTest {
                 null,
                 "YetAnotherRestaurant",
                 "2016-01-20",
-                Arrays.asList("Mrkvova", "Cicerova"),
-                Arrays.asList("Hovadzi gulas", "Slovenske rizoto"),
-                emptyList<String>())
+                Arrays.asList(Food("Mrkvova", ""), Food("Cicerova", "")),
+                Arrays.asList(Food("Hovadzi gulas", ""), Food("Slovenske rizoto", "")),
+                emptyList<Food>())
 
         val secondDailyMenu = DailyMenu(
                 null,
                 "YetAnotherRestaurant",
                 "2016-01-20",
-                Arrays.asList("Mrkvova", "Cicerova"),
-                Arrays.asList("Hovadzi gulas", "Slovenske rizoto"),
-                emptyList<String>())
+                Arrays.asList(Food("Mrkvova", ""), Food("Cicerova", "")),
+                Arrays.asList(Food("Hovadzi gulas", ""), Food("Slovenske rizoto", "")),
+                emptyList<Food>())
 
         dailyMenuRepository.save(firstDailyMenu)
         dailyMenuRepository.save(secondDailyMenu)

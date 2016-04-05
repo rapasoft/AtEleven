@@ -2,6 +2,7 @@ package no.itera.ateleven.service
 
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.model.DailyMenuSourcePage
+import no.itera.ateleven.model.Food
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import org.junit.Before
@@ -65,7 +66,7 @@ open class MenuExtractorServiceTest {
 
     @Test
     fun testExtractAndUpdateData() {
-        val replacement = TestApplication.dailyMenuMock("TestExtract", Collections.singletonList("IbaDrzkova"))
+        val replacement = TestApplication.dailyMenuMock("TestExtract", Collections.singletonList(Food("IbaDrzkova", "")))
         Mockito.`when`(dailyMenuRepository.findByDateAndRestaurantName(MenuExtractorServiceImpl.currentDate(), "TestExtract")).thenReturn(
                 Collections.singletonList(dailyMenuMock)
         )
