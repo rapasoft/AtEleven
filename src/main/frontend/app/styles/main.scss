@@ -74,5 +74,9 @@ html, body, #app, .main {
   .daily-menu-list {
     flex-direction: row;
     justify-content: center;
+    padding-top: 100px;
+  }
+  .selected-restaurants {
+    flex-direction: row;
   }
 }
