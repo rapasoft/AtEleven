@@ -20,14 +20,14 @@ class NameSanitizerFilter : DailyMenuFilter {
     }
 
     fun removeBS(input: Food): Food {
-        return Food(input.description
+        return Food(input.id, input.description
                 .replace("""[0-9]+\.""".toRegex(), "") // remove numbering
                 .replace("""/{0,1}[0-9]+g/{0,1}""".toRegex(), "") // remove grams
                 .replace("""0[,|\.][0-9]+\s{0,1}l{1}""".toRegex(), "") // remove litres
                 .replace("""/{0,1}([0-9],*)+/{0,1}""".toRegex(), "") // remove alergens
                 .replace("""€""".toRegex(), "") // remove eurosymbol
                 .replace("""(Pondelok|Utorok|Streda|Štvrtok|Piatok)\:{0,1}""".toRegex(), "")
-                .trim(), input.type)
+                .trim(), input.foodType)
     }
 
 }

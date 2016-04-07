@@ -5,10 +5,10 @@ var RenderList = React.createClass({
       var listItems = 'N/A';
       if (this.props.data) {
         listItems = this.props.data.map((item, i) => {
-            let firstLetter = item.type[0].toUpperCase();
             return (
               <li key={i}>
-                {item.type != 'empty' && <span style={ JSON.parse(item.style) } className="category" title={item.type}>{firstLetter}</span>}
+                {item.foodType.map((type, j) => <span key={j} style={ JSON.parse(type.style) } className="category"
+                                                      title={type.type}>{type.type[0].toUpperCase()}</span>)}
                 {item.description}
               </li>
             );

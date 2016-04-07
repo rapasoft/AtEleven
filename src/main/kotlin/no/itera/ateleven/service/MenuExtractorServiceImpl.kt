@@ -103,7 +103,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
 
     private fun retrieveList(path: String?, html: Document): List<Food> {
         if (path != null && !path.equals("")) {
-            return html.select(path).map { el -> Food(el.text(), NO_CATEGORY) }
+            return html.select(path).map { el -> Food(null, el.text(), emptyList()) }
         }
         return emptyList()
     }

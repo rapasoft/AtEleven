@@ -66,7 +66,7 @@ open class MenuExtractorServiceTest {
 
     @Test
     fun testExtractAndUpdateData() {
-        val replacement = TestApplication.dailyMenuMock("TestExtract", Collections.singletonList(Food("IbaDrzkova", "")))
+        val replacement = TestApplication.dailyMenuMock("TestExtract", Collections.singletonList(Food("IbaDrzkova")))
         Mockito.`when`(dailyMenuRepository.findByDateAndRestaurantName(MenuExtractorServiceImpl.currentDate(), "TestExtract")).thenReturn(
                 Collections.singletonList(dailyMenuMock)
         )

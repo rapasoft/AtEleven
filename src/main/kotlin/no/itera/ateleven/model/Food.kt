@@ -1,11 +1,15 @@
 package no.itera.ateleven.model
 
-import javax.persistence.Embeddable
+import javax.persistence.ElementCollection
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 /**
  * Created by Pavol Rajzak, Itera.
  */
-@Embeddable
-data class Food(val description: String, val type: String, val style: String = "") {
-    constructor() : this("", "", "")
+@Entity
+data class Food(@Id @GeneratedValue val id: Int? = null,
+                val description: String = "",
+                @ElementCollection val foodType: List<FoodType> = emptyList()) {
 }

@@ -25,12 +25,12 @@ import java.util.*
 open class TestApplication {
     companion object {
         fun dailyMenuMock(restaurantName: String = "Test" + (Math.random() * 100).toInt(),
-                          soups: List<Food> = Arrays.asList(Food("Mrkvova", ""), Food("Cicerova", ""))) = DailyMenu(
+                          soups: List<Food> = Arrays.asList(Food("Mrkvova"), Food("Cicerova"))) = DailyMenu(
                 null,
                 restaurantName,
                 MenuExtractorServiceImpl.currentDate(),
                 soups,
-                Arrays.asList(Food("Hovadzi gulas", ""), Food("Slovenske rizoto", "")),
+                Arrays.asList(Food("Hovadzi gulas"), Food("Slovenske rizoto")),
                 emptyList<Food>())
     }
 }

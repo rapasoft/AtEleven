@@ -1,6 +1,7 @@
 package no.itera.ateleven.filter
 
 import no.itera.ateleven.model.Food
+import no.itera.ateleven.model.FoodType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -11,34 +12,42 @@ class FoodAnnotationFilterTest {
 
     @Test
     fun annotatePork() {
-        val input = Food("Bravčová rolka s prosciuttom a bazalkou, zemiakovo-petržlenové pyré, maslová omáčka", "")
+        val input = Food("Bravčová rolka s prosciuttom a bazalkou, zemiakovo-petržlenové pyré, maslová omáčka", emptyList())
         val output = FoodAnnotationFilter().addAnnotations(input);
 
-        assertEquals(Food(input.description, "bravcove").type, output.type);
+        assertEquals(Food(input.description, arrayListOf(FoodType("bravcove", ""))).foodType, output.foodType);
     }
 
     @Test
     fun annotateChicken() {
-        val input = Food("Grilovaný kurací steak na anglickej zelenine podávaný s dusenou ryžou", "")
+        val input = Food("Grilovaný kurací steak na anglickej zelenine podávaný s dusenou ryžou", emptyList())
         val output = FoodAnnotationFilter().addAnnotations(input);
 
-        assertEquals(Food(input.description, "kuracie").type, output.type);
+        assertEquals(Food(input.description, arrayListOf(FoodType("kuracie", ""))).foodType, output.foodType);
     }
 
     @Test
     fun annotateBeef() {
-        val input = Food("Ponuka dňa: HOVÄDZIE LÍĆKA NA KOREŃOVEJ ZELENINE SO ŹEMĹOVÝMI KNEDĹAMI", "")
+        val input = Food("Ponuka dňa: HOVÄDZIE LÍĆKA NA KOREŃOVEJ ZELENINE SO ŹEMĹOVÝMI KNEDĹAMI", emptyList())
         val output = FoodAnnotationFilter().addAnnotations(input);
 
-        assertEquals(Food(input.description, "hovadzie").type, output.type);
+        assertEquals(Food(input.description, arrayListOf(FoodType("hovadzie", ""))).foodType, output.foodType);
     }
 
     @Test
     fun annotatePizza() {
-        val input = Food("Pizza Cartago: pomodoro, mozzarella, šunka, paprika, vajce", "")
+        val input = Food("Pizza Cartago: pomodoro, mozzarella, šunka, paprika, vajce", emptyList())
         val output = FoodAnnotationFilter().addAnnotations(input);
 
-        assertEquals(Food(input.description, "pizza").type, output.type);
+        assertEquals(Food(input.description, arrayListOf(FoodType("pizza", ""))).foodType, output.foodType);
+    }
+
+    @Test
+    fun annotateMultiple() {
+        val input = Food("Kuracia polievka so zeleninou a cestovinou", emptyList())
+        val output = FoodAnnotationFilter().addAnnotations(input)
+
+        assertEquals(Food(input.description, arrayListOf(FoodType("kuracie", ""), FoodType("cestoviny", ""))).foodType, output.foodType)
     }
 
 

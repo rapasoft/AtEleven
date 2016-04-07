@@ -11,9 +11,9 @@ data class DailyMenu(
         @Id @GeneratedValue val id: Int?,
         val restaurantName: String,
         val date: String,
-        @ElementCollection(fetch = javax.persistence.FetchType.EAGER) val soups: List<Food>,
-        @ElementCollection(fetch = javax.persistence.FetchType.EAGER) val mainDishes: List<Food>,
-        @ElementCollection(fetch = javax.persistence.FetchType.EAGER) val other: List<Food>) {
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val soups: List<Food>,
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val mainDishes: List<Food>,
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val other: List<Food>) {
     constructor() : this(null, "", "", emptyList(), emptyList(), emptyList())
 
     fun menuEquals(other: DailyMenu): Boolean =
