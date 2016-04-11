@@ -2,6 +2,7 @@ package no.itera.ateleven.controller
 
 import no.itera.ateleven.config.TestApplication
 import no.itera.ateleven.repository.DailyMenuRepository
+import no.itera.ateleven.repository.FoodRepository
 import no.itera.ateleven.service.MenuExtractorServiceImpl
 import org.hamcrest.Matchers
 import org.junit.After
@@ -30,12 +31,19 @@ class DailyMenuControllerTest {
 
     @Autowired lateinit var wac: WebApplicationContext
     @Autowired lateinit var dailyMenuRepository: DailyMenuRepository
+    @Autowired lateinit var foodRepository: FoodRepository
     lateinit var mockMvc: MockMvc
 
     @Before
     fun before() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build()
-        dailyMenuRepository.save(TestApplication.dailyMenuMock())
+        val dailyMenu = TestApplication.dailyMenuMock()
+
+        foodRepository.save(dailyMenu.mainDishes)
+        foodRepository.save(dailyMenu.soups)
+        foodRepository.save(dailyMenu.other)
+
+        dailyMenuRepository.save(dailyMenu)
     }
 
     @After

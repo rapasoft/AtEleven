@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import DailyMenuList from "./components/dailyMenuList";
 import SelectedItems from "./components/selectedItems";
 import {Sort, ORDER} from "./utils/sort";
@@ -94,4 +95,4 @@ export default class DailyMenuApp extends React.Component {
   }
 }
 
-React.render(<DailyMenuApp />, mountNode);
+ReactDOM.render(<DailyMenuApp />, mountNode);

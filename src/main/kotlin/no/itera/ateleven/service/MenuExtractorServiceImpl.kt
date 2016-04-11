@@ -8,6 +8,8 @@ import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.model.Food
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
+import no.itera.ateleven.repository.FoodRepository
+import no.itera.ateleven.repository.FoodTypeRepository
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
@@ -26,14 +28,15 @@ import java.util.*
 @Service
 open class MenuExtractorServiceImpl @Autowired constructor(
         var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository,
-        var dailyMenuRepository: DailyMenuRepository
+        var dailyMenuRepository: DailyMenuRepository,
+        var foodTypeRepository: FoodTypeRepository,
+        var foodRepository: FoodRepository
 ) : MenuExtractorService {
 
     companion object {
         val LOG: org.slf4j.Logger = LoggerFactory.getLogger(MenuExtractorServiceImpl::class.java.name)
         val ID_IS_GENERATED = null
         const val HOUR_IN_MS: Long = 1000 * 60 * 60
-        const val NO_CATEGORY: String = "empty"
 
         fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
     }
@@ -54,15 +57,40 @@ open class MenuExtractorServiceImpl @Autowired constructor(
             val extracted = extract(sc)
 
             if (menusForRestaurantAndDate.isEmpty()) {
-                dailyMenuRepository.save(extracted)
+                persistExtracted(extracted)
             } else if (menusForRestaurantAndDate.size == 1 && !menusForRestaurantAndDate[0].menuEquals(extracted)) {
                 LOG.info("There was a change in menu for ${currentDate()} and ${sc.restaurantName}, updating the menu now.")
                 dailyMenuRepository.delete(menusForRestaurantAndDate[0])
-                dailyMenuRepository.save(extracted)
+                persistExtracted(extracted)
             } else {
                 LOG.info("Menu already exists for ${currentDate()} and ${sc.restaurantName}, it won't be updated.")
             }
         }
+    }
+
+    private fun persistExtracted(extracted: DailyMenu) {
+        dailyMenuRepository.save(DailyMenu(
+                extracted.id,
+                extracted.restaurantName,
+                extracted.date,
+                extracted.soups.map { food -> persistFoodTypes(food) },
+                extracted.mainDishes.map { food -> persistFoodTypes(food) },
+                extracted.other.map { food -> persistFoodTypes(food) }
+        ))
+    }
+
+    private fun persistFoodTypes(food: Food): Food {
+        return foodRepository.save(Food(
+                food.description,
+                food.foodType.map { foodType ->
+                    if (!foodTypeRepository.exists(foodType.type)) {
+                        foodTypeRepository.save(foodType)
+                    } else {
+                        foodTypeRepository.findOne(foodType.type);
+                    }
+                },
+                food.id
+        ))
     }
 
     @Override
@@ -103,7 +131,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
 
     private fun retrieveList(path: String?, html: Document): List<Food> {
         if (path != null && !path.equals("")) {
-            return html.select(path).map { el -> Food(el.text(), NO_CATEGORY) }
+            return html.select(path).map { el -> Food(el.text(), emptyList()) }
         }
         return emptyList()
     }
