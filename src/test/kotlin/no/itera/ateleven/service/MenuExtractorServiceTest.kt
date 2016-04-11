@@ -5,12 +5,12 @@ import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.model.Food
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
+import no.itera.ateleven.repository.FoodRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.never
+import org.mockito.Mockito.*
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
@@ -28,6 +28,7 @@ open class MenuExtractorServiceTest {
     lateinit private var dailyMenuSourcePage: DailyMenuSourcePage
     lateinit private var dailyMenuSourcePageRepository: DailyMenuSourcePageRepository
     lateinit private var dailyMenuRepository: DailyMenuRepository
+    lateinit private var foodRepository: FoodRepository
     val dailyMenuMock = TestApplication.dailyMenuMock("TestExtract")
 
     @Before
@@ -42,13 +43,21 @@ open class MenuExtractorServiceTest {
 
         dailyMenuRepository = mock(DailyMenuRepository::class.java)
         dailyMenuSourcePageRepository = mock(DailyMenuSourcePageRepository::class.java)
+        foodRepository = mock(FoodRepository::class.java)
 
         menuExtractorService = mock(MenuExtractorServiceImpl::class.java)
         menuExtractorService.dailyMenuRepository = dailyMenuRepository
         menuExtractorService.dailyMenuSourcePageRepository = dailyMenuSourcePageRepository
+        menuExtractorService.foodRepository = foodRepository
 
         Mockito.`when`(dailyMenuSourcePageRepository.findAll()).thenReturn(mockIterable(dailyMenuSourcePage))
         Mockito.`when`(menuExtractorService.extractData()).thenCallRealMethod()
+
+        dailyMenuMock.mainDishes.forEach { food -> Mockito.`when`(foodRepository.save(eq(food))).thenReturn(food) }
+        dailyMenuMock.other.forEach { food -> Mockito.`when`(foodRepository.save(eq(food))).thenReturn(food) }
+        dailyMenuMock.soups.forEach { food -> Mockito.`when`(foodRepository.save(eq(food))).thenReturn(food) }
+        Mockito.`when`(foodRepository.save(Food("IbaDrzkova"))).thenReturn(Food("IbaDrzkova"))
+
         Mockito.`when`(menuExtractorService.extract(Mockito.any(DailyMenuSourcePage::class.java))).thenReturn(dailyMenuMock)
     }
 

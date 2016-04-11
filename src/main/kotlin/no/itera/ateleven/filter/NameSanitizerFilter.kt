@@ -20,7 +20,7 @@ class NameSanitizerFilter : DailyMenuFilter {
     }
 
     fun removeBS(input: Food): Food {
-        return Food(input.id, input.description
+        return Food(input.description
                 .replace("""[0-9]+\.""".toRegex(), "") // remove numbering
                 .replace("""/{0,1}[0-9]+g/{0,1}""".toRegex(), "") // remove grams
                 .replace("""0[,|\.][0-9]+\s{0,1}l{1}""".toRegex(), "") // remove litres

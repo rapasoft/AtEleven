@@ -22,6 +22,7 @@ import java.util.*
 class DailyMenuRepositoryTest {
 
     @Autowired lateinit var dailyMenuRepository: DailyMenuRepository
+    @Autowired lateinit var foodRepository: FoodRepository
 
     @After
     fun after() {
@@ -32,6 +33,9 @@ class DailyMenuRepositoryTest {
     fun shouldSaveDailyMenu() {
         var dailyMenu = TestApplication.dailyMenuMock()
 
+        foodRepository.save(dailyMenu.mainDishes)
+        foodRepository.save(dailyMenu.soups)
+        foodRepository.save(dailyMenu.other)
         dailyMenu = dailyMenuRepository.save(dailyMenu)
 
         assertNotNull(dailyMenu)
