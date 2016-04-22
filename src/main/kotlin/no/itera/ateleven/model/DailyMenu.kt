@@ -1,5 +1,7 @@
 package no.itera.ateleven.model
 
+import java.sql.Timestamp
+import java.time.Instant
 import javax.persistence.*
 
 /**
@@ -11,14 +13,22 @@ data class DailyMenu(
         @Id @GeneratedValue val id: Int?,
         val restaurantName: String,
         val date: String,
-        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val soups: List<Food>,
-        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val mainDishes: List<Food>,
-        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val other: List<Food>) {
-    constructor() : this(null, "", "", emptyList(), emptyList(), emptyList())
+        val lastUpdated: Timestamp,
+        @OneToMany(fetch = EAGER) val soups: List<Food>,
+        @OneToMany(fetch = EAGER) val mainDishes: List<Food>,
+        @OneToMany(fetch = EAGER) val other: List<Food>) {
+
+    constructor() : this(null, "", "", Timestamp.from(Instant.now()), emptyList(), emptyList(), emptyList())
+
+    companion object {
+        fun textify(foodList: List<Food>): String {
+            return foodList.map { food -> food.description }.joinToString(",")
+        }
+    }
 
     fun menuEquals(other: DailyMenu): Boolean =
-            soups.equals(other.soups) &&
-                    mainDishes.equals(other.mainDishes) &&
-                    other.other.equals(other.other)
+            textify(this.soups).equals(textify(other.soups)) &&
+                    textify(this.mainDishes).equals(textify(other.mainDishes)) &&
+                    textify(this.other).equals(textify(other.other))
 
 }

@@ -1,5 +1,10 @@
 import React from "react";
 
+const timeOptions = {
+  timeZone: 'Europe/Bratislava',
+  hour: '2-digit', minute: 'numeric'
+};
+
 var RenderList = React.createClass({
     render: function () {
       var listItems = 'N/A';
@@ -32,7 +37,12 @@ export default class DailyMenuItem extends React.Component {
     if (this.props.rendered) {
     return (
       <div className="menu-item panel panel-default">
-        <div className="panel-heading">{this.props.restaurantName}</div>
+        <div className="panel-heading">
+          {this.props.restaurantName}
+          <small style={{float: 'right'}}>
+            @{(this.props.lastUpdated ? (new Date(this.props.lastUpdated)).toLocaleString([], timeOptions) : '--')}
+          </small>
+        </div>
         <div className="panel-body">
           <h4>Soups</h4>
           <RenderList data={this.props.soups}/>

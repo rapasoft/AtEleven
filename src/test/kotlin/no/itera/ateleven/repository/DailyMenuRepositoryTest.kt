@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
+import java.sql.Timestamp
+import java.time.Instant
 import java.util.*
 
 /**
@@ -44,10 +46,13 @@ class DailyMenuRepositoryTest {
 
     @Test(expected = Exception::class)
     fun shouldNotSaveSameMenuForRestaurantAndDay() {
+        val timeStamp = Timestamp.from(Instant.now())
+
         val firstDailyMenu = DailyMenu(
                 null,
                 "YetAnotherRestaurant",
                 "2016-01-20",
+                timeStamp,
                 Arrays.asList(Food("Mrkvova"), Food("Cicerova")),
                 Arrays.asList(Food("Hovadzi gulas"), Food("Slovenske rizoto")),
                 emptyList<Food>())
@@ -56,6 +61,7 @@ class DailyMenuRepositoryTest {
                 null,
                 "YetAnotherRestaurant",
                 "2016-01-20",
+                timeStamp,
                 Arrays.asList(Food("Mrkvova"), Food("Cicerova")),
                 Arrays.asList(Food("Hovadzi gulas"), Food("Slovenske rizoto")),
                 emptyList<Food>())

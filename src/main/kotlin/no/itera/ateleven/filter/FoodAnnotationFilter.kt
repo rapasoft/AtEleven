@@ -26,6 +26,7 @@ class FoodAnnotationFilter : DailyMenuFilter {
                 dailyMenu.id,
                 dailyMenu.restaurantName,
                 dailyMenu.date,
+                dailyMenu.lastUpdated,
                 dailyMenu.soups.map { s -> addAnnotations(s) },
                 dailyMenu.mainDishes.map { s -> addAnnotations(s) },
                 dailyMenu.other.map { s -> addAnnotations(s) }

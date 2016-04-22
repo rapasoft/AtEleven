@@ -9,6 +9,7 @@ export default class DailyMenuList extends React.Component {
         <DailyMenuItem key={item.restaurantName}
                        rendered={component.props.selected.filter(s => s.name == item.restaurantName)[0].selected}
                        restaurantName={item.restaurantName}
+                       lastUpdated={item.lastUpdated}
                        date={item.date}
                        soups={item.soups}
                        mainDishes={item.mainDishes}

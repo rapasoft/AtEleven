@@ -18,8 +18,10 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.net.SocketTimeoutException
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 /**
@@ -73,6 +75,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
                 extracted.id,
                 extracted.restaurantName,
                 extracted.date,
+                extracted.lastUpdated,
                 extracted.soups.map { food -> persistFoodTypes(food) },
                 extracted.mainDishes.map { food -> persistFoodTypes(food) },
                 extracted.other.map { food -> persistFoodTypes(food) }
@@ -104,6 +107,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
                 ID_IS_GENERATED,
                 dailyMenuSourcePage.restaurantName,
                 currentDate(),
+                Timestamp.from(Instant.now().atZone(ZoneId.of("GMT+2")).toInstant()),
                 retrieveList(dailyMenuSourcePage.soupsPath, html),
                 retrieveList(dailyMenuSourcePage.mainDishesPath, html),
                 retrieveList(dailyMenuSourcePage.otherPath, html)

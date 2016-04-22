@@ -13,6 +13,7 @@ class NameSanitizerFilter : DailyMenuFilter {
                 dailyMenu.id,
                 dailyMenu.restaurantName,
                 dailyMenu.date,
+                dailyMenu.lastUpdated,
                 dailyMenu.soups.map { s -> removeBS(s) },
                 dailyMenu.mainDishes.map { s -> removeBS(s) },
                 dailyMenu.other.map { s -> removeBS(s) }
