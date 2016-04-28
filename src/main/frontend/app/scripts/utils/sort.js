@@ -9,21 +9,8 @@ export const contentSize = (i) => i.soups.reduce(sum, 0) + i.mainDishes.reduce(s
 
 export class Sort {
   static byContentSize(data, order) {
-    let sorted = data.sort((i, j) => {
+    return data.sort((i, j) => {
       return order(contentSize(i), contentSize(j));
     });
-
-    let i = 1;
-    let j = sorted.length - 1;
-
-    while (i <= j) {
-      let tmp = sorted[i];
-      sorted[i] = sorted[j];
-      sorted[j] = tmp;
-      i++;
-      j--;
-    }
-
-    return sorted;
   }
 }

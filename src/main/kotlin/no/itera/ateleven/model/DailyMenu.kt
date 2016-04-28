@@ -14,9 +14,9 @@ data class DailyMenu(
         val restaurantName: String,
         val date: String,
         val lastUpdated: Timestamp,
-        @OneToMany(fetch = EAGER) val soups: List<Food>,
-        @OneToMany(fetch = EAGER) val mainDishes: List<Food>,
-        @OneToMany(fetch = EAGER) val other: List<Food>) {
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val soups: List<Food>,
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val mainDishes: List<Food>,
+        @OneToMany(fetch = javax.persistence.FetchType.EAGER) val other: List<Food>) {
 
     constructor() : this(null, "", "", Timestamp.from(Instant.now()), emptyList(), emptyList(), emptyList())
 

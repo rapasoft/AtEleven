@@ -1,9 +1,6 @@
 import React from "react";
-
-const timeOptions = {
-  timeZone: 'Europe/Bratislava',
-  hour: '2-digit', minute: 'numeric'
-};
+import moment from "moment";
+import "moment-timezone";
 
 var RenderList = React.createClass({
     render: function () {
@@ -40,7 +37,7 @@ export default class DailyMenuItem extends React.Component {
         <div className="panel-heading">
           {this.props.restaurantName}
           <small style={{float: 'right'}}>
-            @{(this.props.lastUpdated ? (new Date(this.props.lastUpdated)).toLocaleString([], timeOptions) : '--')}
+            @{(this.props.lastUpdated ? moment(this.props.lastUpdated, 'x').tz('Europe/Bratislava').format('HH:mm') : '--')}
           </small>
         </div>
         <div className="panel-body">

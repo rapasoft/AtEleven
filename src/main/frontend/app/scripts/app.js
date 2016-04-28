@@ -77,14 +77,17 @@ export default class DailyMenuApp extends React.Component {
     return (
       <div className="main">
         <nav className="navbar navbar-default navbar-fixed-top">
+          <button className="mobile-menu-switch" onClick={() => { $('.toBeHidden').toggle(); }}>
+            M
+          </button>
           <div className="row legend">
             <div className="col-sm-3">
               <h1>AtEleven</h1>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6 toBeHidden">
               <SelectedItems selected={this.state.selected} clickCallback={this.itemClicked.bind(this)}/>
             </div>
-            <div className="col-sm-3">
+            <div className="col-sm-3 toBeHidden">
               <h2>{new Date().toJSON().slice(0, 10)}</h2>
             </div>
           </div>
