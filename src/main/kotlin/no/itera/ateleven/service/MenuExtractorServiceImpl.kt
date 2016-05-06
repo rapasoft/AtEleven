@@ -43,7 +43,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
     }
 
-    val dailyMenuFilters: List<DailyMenuFilter> = arrayListOf(
+    val dailyMenuFilters: List<DailyMenuFilter> = listOf(
             NameSanitizerFilter(),
             FoodAnnotationFilter()
     )
@@ -85,7 +85,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
     private fun persistFoodTypes(food: Food): Food {
         return foodRepository.save(Food(
                 food.description,
-                food.foodType.map { foodType ->
+                food.foodTypes.map { foodType ->
                     if (!foodTypeRepository.exists(foodType.type)) {
                         foodTypeRepository.save(foodType)
                     } else {

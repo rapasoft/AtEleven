@@ -22,6 +22,15 @@ html, body, #app, .main {
   -moz-columns: 4 300px;
   columns: 4 300px;
 
+  .time-updated {
+    float: right;
+    margin-top: -25px;
+  }
+
+  h4, h5 {
+    font-weight: 700;
+  }
+
   .menu-item {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;

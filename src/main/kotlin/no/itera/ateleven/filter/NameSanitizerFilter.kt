@@ -28,7 +28,7 @@ class NameSanitizerFilter : DailyMenuFilter {
                 .replace("""/{0,1}([0-9],*)+/{0,1}""".toRegex(), "") // remove alergens
                 .replace("""€""".toRegex(), "") // remove eurosymbol
                 .replace("""(Pondelok|Utorok|Streda|Štvrtok|Piatok)\:{0,1}""".toRegex(), "")
-                .trim(), input.foodType)
+                .trim(), input.foodTypes)
     }
 
 }

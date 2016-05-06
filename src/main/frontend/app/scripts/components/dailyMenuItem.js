@@ -35,17 +35,17 @@ export default class DailyMenuItem extends React.Component {
     return (
       <div className="menu-item panel panel-default">
         <div className="panel-heading">
-          {this.props.restaurantName}
-          <small style={{float: 'right'}}>
+          <h4>{this.props.restaurantName}</h4>
+          <small className="time-updated">
             @{(this.props.lastUpdated ? moment(this.props.lastUpdated, 'x').tz('Europe/Bratislava').format('HH:mm') : '--')}
           </small>
         </div>
         <div className="panel-body">
-          <h4>Soups</h4>
+          <h5>Soups</h5>
           <RenderList data={this.props.soups}/>
-          <h4>Main Dishes</h4>
+          <h5>Main Dishes</h5>
           <RenderList data={this.props.mainDishes}/>
-          {this.props.other.length > 0 && <h4>Other</h4> }
+          {this.props.other.length > 0 && <h5>Other</h5> }
           {this.props.other.length > 0 && <RenderList data={this.props.other}/>}
         </div>
       </div>

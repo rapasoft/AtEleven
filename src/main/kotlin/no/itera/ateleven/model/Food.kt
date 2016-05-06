@@ -10,6 +10,6 @@ import javax.persistence.ManyToMany
  */
 @Entity
 data class Food(val description: String = "",
-                @ManyToMany val foodType: List<FoodType> = emptyList(),
+                @ManyToMany val foodTypes: List<FoodType> = emptyList(),
                 @Id @GeneratedValue val id: Int? = null) {
 }

@@ -26,8 +26,8 @@ export default class DailyMenuApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: [],
-      data: []
+      selected: require('../test/example-data').exampleSelected,
+      data: require('../test/example-data').exampleData
     };
   }
 

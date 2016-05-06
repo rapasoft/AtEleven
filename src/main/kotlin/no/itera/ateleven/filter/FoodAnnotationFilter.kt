@@ -9,7 +9,7 @@ import no.itera.ateleven.model.FoodAnnotation
  */
 class FoodAnnotationFilter : DailyMenuFilter {
 
-    val annotationList = arrayListOf(
+    val annotationList = listOf(
             FoodAnnotation("kuracie", """(kura.*)""".toRegex(RegexOption.IGNORE_CASE), "{\"backgroundColor\": \"blanchedalmond\"}"),
             FoodAnnotation("hovädzie", """(hov[ä|a]dz.*)""".toRegex(RegexOption.IGNORE_CASE), "{\"backgroundColor\": \"darkred\", \"color\": \"white\"}"),
             FoodAnnotation("bravčové", """(brav[c|č]ov.*)""".toRegex(RegexOption.IGNORE_CASE), "{\"backgroundColor\": \"pink\"}"),
