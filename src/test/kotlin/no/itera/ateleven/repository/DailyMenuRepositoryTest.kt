@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import java.sql.Timestamp
-import java.time.Instant
 import java.util.*
 
 /**
@@ -46,7 +45,7 @@ class DailyMenuRepositoryTest {
 
     @Test(expected = Exception::class)
     fun shouldNotSaveSameMenuForRestaurantAndDay() {
-        val timeStamp = Timestamp.from(Instant.now())
+        val timeStamp = Timestamp(System.currentTimeMillis())
 
         val firstDailyMenu = DailyMenu(
                 null,

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.web.bind.annotation.RestController
 import java.sql.Timestamp
-import java.time.Instant
 import java.util.*
 
 @EnableJpaRepositories
@@ -31,7 +30,7 @@ open class TestApplication {
                 null,
                 restaurantName,
                 MenuExtractorServiceImpl.currentDate(),
-                Timestamp.from(Instant.now()),
+                Timestamp(System.currentTimeMillis()),
                 soups,
                 Arrays.asList(Food("Hovadzi gulas"), Food("Slovenske rizoto")),
                 emptyList<Food>())

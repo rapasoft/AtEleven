@@ -1,7 +1,6 @@
 package no.itera.ateleven.model
 
 import java.sql.Timestamp
-import java.time.Instant
 import javax.persistence.*
 
 /**
@@ -18,7 +17,7 @@ data class DailyMenu(
         @OneToMany(fetch = javax.persistence.FetchType.EAGER) val mainDishes: List<Food>,
         @OneToMany(fetch = javax.persistence.FetchType.EAGER) val other: List<Food>) {
 
-    constructor() : this(null, "", "", Timestamp.from(Instant.now()), emptyList(), emptyList(), emptyList())
+    constructor() : this(null, "", "", Timestamp(System.currentTimeMillis()), emptyList(), emptyList(), emptyList())
 
     companion object {
         fun textify(foodList: List<Food>): String {

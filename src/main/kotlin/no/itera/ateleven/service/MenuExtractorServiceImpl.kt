@@ -10,6 +10,7 @@ import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import no.itera.ateleven.repository.FoodRepository
 import no.itera.ateleven.repository.FoodTypeRepository
+import org.joda.time.Instant
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
@@ -20,9 +21,6 @@ import org.springframework.stereotype.Service
 import java.net.SocketTimeoutException
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.ZoneId
-import java.util.*
 
 /**
  * Created by Pavol Rajzak, Itera.
@@ -40,7 +38,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
         val ID_IS_GENERATED = null
         const val HOUR_IN_MS: Long = 1000 * 60 * 60
 
-        fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Date.from(Instant.now()))
+        fun currentDate() = SimpleDateFormat("yyyy-MM-dd").format(Instant.now().toDate())
     }
 
     val dailyMenuFilters: List<DailyMenuFilter> = listOf(
@@ -107,7 +105,7 @@ open class MenuExtractorServiceImpl @Autowired constructor(
                 ID_IS_GENERATED,
                 dailyMenuSourcePage.restaurantName,
                 currentDate(),
-                Timestamp.from(Instant.now().atZone(ZoneId.of("GMT+2")).toInstant()),
+                Timestamp(System.currentTimeMillis()),
                 retrieveList(dailyMenuSourcePage.soupsPath, html),
                 retrieveList(dailyMenuSourcePage.mainDishesPath, html),
                 retrieveList(dailyMenuSourcePage.otherPath, html)

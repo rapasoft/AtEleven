@@ -2,6 +2,7 @@ package no.itera.ateleven.config
 
 import com.fasterxml.classmate.TypeResolver
 import com.google.common.collect.Lists.newArrayList
+import org.joda.time.LocalDate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,7 +20,6 @@ import springfox.documentation.service.ResponseMessage
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
-import java.time.LocalDate
 import java.util.*
 
 /**
