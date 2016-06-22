@@ -21,11 +21,11 @@
     "url": "https://www.zomato.com/bratislava/sit-eat-ru%C5%BEinov-bratislava-ii/menu"
   },
   {
-    "mainDishesPath": "#menu-preview > div.tmi-groups > div.tmi-group:eq(0) > div:gt(1) > div:eq(0)",
-    "otherPath": "string",
     "restaurantName": "Buddies",
-    "soupsPath": "#menu-preview > div.tmi-groups > div.tmi-group:eq(0) > div:nth-child(2) > div.tmi-text-group > div",
-    "url": "https://www.zomato.com/bratislava/buddies-ru%C5%BEinov-bratislava-ii/menu#daily"
+    "url": "http://restauracie.sme.sk/restauracia/buddies_7319-ruzinov_2980/denne-menu",
+    "soupsPath": ".dnesne_menu > .jedlo_polozka:eq(1)",
+    "mainDishesPath": ".dnesne_menu > .jedlo_polozka:gt(1)",
+    "otherPath": ""
   },
   {
     "mainDishesPath": "#menu-preview > div > div.tmi-group:eq(0) > div:gt(1) > div:eq(0)",
