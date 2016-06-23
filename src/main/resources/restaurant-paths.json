@@ -1,10 +1,10 @@
 [
   {
-    "mainDishesPath": "#menu-preview > div.tmi-groups > div:eq(0) > div:gt(2) > div.tmi-text-group > div",
-    "otherPath": "string",
     "restaurantName": "Astra Pub Ruzinov",
-    "soupsPath": "#menu-preview > div.tmi-groups > div:eq(0) > div:lt(3) > div.tmi-text-group > div",
-    "url": "https://www.zomato.com/widgets/daily_menu?entity_id=16508164"
+    "url": "https://www.zomato.com/sk/widgets/daily_menu?entity_id=16508164",
+    "soupsPath": "body > div.widget-body > div.main-body > div:nth-child(6) > div.left-div.item-name, body > div.widget-body > div.main-body > div:nth-child(8) > div.left-div.item-name",
+    "mainDishesPath": "body > div.widget-body > div.main-body > div:nth-child(10) > div.left-div.item-name, body > div.widget-body > div.main-body > div:nth-child(12) > div.left-div.item-name, body > div.widget-body > div.main-body > div:nth-child(14) > div.left-div.item-name, body > div.widget-body > div.main-body > div:nth-child(16) > div.left-div.item-name",
+    "otherPath": ""
   },
   {
     "mainDishesPath": "#menu-preview > div > div.tmi-group:eq(0) > div.tmi-daily:gt(3) > div:eq(0)",
