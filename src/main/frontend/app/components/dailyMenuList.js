@@ -1,5 +1,5 @@
-import React from "react";
-import DailyMenuItem from "./dailyMenuItem";
+import React from 'react';
+import DailyMenuItem from './dailyMenuItem';
 
 export default class DailyMenuList extends React.Component {
   render() {
@@ -23,4 +23,9 @@ export default class DailyMenuList extends React.Component {
     )
   }
 }
+
+DailyMenuList.propTypes = {
+  data: React.PropTypes.array,
+  selected: React.PropTypes.array
+};
 

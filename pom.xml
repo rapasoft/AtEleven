@@ -132,24 +132,23 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>bower install</id>
+                        <id>npm run test:lint</id>
                         <goals>
-                            <goal>bower</goal>
+                            <goal>npm</goal>
                         </goals>
-
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>run test:lint</arguments>
                             <installDirectory>target</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>gulp build</id>
+                        <id>npm run webpack</id>
                         <goals>
-                            <goal>gulp</goal>
+                            <goal>npm</goal>
                         </goals>
 
                         <configuration>
-                            <arguments>build:production</arguments>
+                            <arguments>run build</arguments>
                             <installDirectory>target</installDirectory>
                         </configuration>
                     </execution>
@@ -190,7 +189,7 @@
                             <outputDirectory>${basedir}/target/classes/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/frontend/dist</directory>
+                                    <directory>src/main/frontend/build</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
@@ -225,6 +224,9 @@
             </properties>
         </profile>
         <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <id>prod</id>
             <properties>
                 <server.hostname>itesk-dev-002.intra.itera.no</server.hostname>
