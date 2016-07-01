@@ -39,5 +39,5 @@ export PATH=$JAVA_HOME/bin:$M2:$PATH
 
 export OLDHOME=$HOME
 export HOME=`pwd`
-mvn -s ~/app-root/repo/.openshift/action_hooks/settings.xml clean install -DskipTests -Pprod
+mvn -s ~/.openshift/action_hooks/settings.xml clean install -DskipTests -Pprod
 export HOME=$OLDHOME
