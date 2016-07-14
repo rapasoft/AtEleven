@@ -9,9 +9,9 @@ class RenderList extends React.Component {
       listItems = this.props.data.map((item, i) => {
           return (
             <li key={i}>
-              {item.foodType && item.foodType.map((type, j) => <span key={j} style={ JSON.parse(type.style) }
-                                                                     className="category"
-                                                                     title={type.type}>{type.type[0].toUpperCase()}</span>)}
+              {item.foodTypes && item.foodTypes.map((type, j) => <span key={j} style={ JSON.parse(type.style) }
+                                                                       className="category"
+                                                                       title={type.type}>{type.type[0].toUpperCase()}</span>)}
               {item.description}
             </li>
           );

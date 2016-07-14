@@ -63,6 +63,7 @@ if (TARGET === 'start' || !TARGET) {
       hot: true,
       inline: true,
       progress: true,
+      lazy: false,
 
       // display only errors to reduce the amount of output
       stats: 'errors-only',
