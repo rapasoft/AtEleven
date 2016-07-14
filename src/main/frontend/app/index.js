@@ -52,10 +52,6 @@ export default class DailyMenuApp extends React.Component {
       });
   }
 
-  componentWillUnmount() {
-    this.serverRequest.abort();
-  }
-
   itemClicked(event) {
     this.setState({
       selected: this.updateState(this, event)
