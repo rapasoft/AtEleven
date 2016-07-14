@@ -6,6 +6,7 @@ import no.itera.ateleven.filter.NameSanitizerFilter
 import no.itera.ateleven.model.DailyMenu
 import no.itera.ateleven.model.DailyMenuSourcePage
 import no.itera.ateleven.model.Food
+import no.itera.ateleven.model.FoodType
 import no.itera.ateleven.repository.DailyMenuRepository
 import no.itera.ateleven.repository.DailyMenuSourcePageRepository
 import no.itera.ateleven.repository.FoodRepository
@@ -74,24 +75,25 @@ open class MenuExtractorServiceImpl @Autowired constructor(
                 extracted.restaurantName,
                 extracted.date,
                 extracted.lastUpdated,
-                extracted.soups.map { food -> persistFoodTypes(food) },
-                extracted.mainDishes.map { food -> persistFoodTypes(food) },
-                extracted.other.map { food -> persistFoodTypes(food) }
+                extracted.soups.map { persistFood(it) },
+                extracted.mainDishes.map { persistFood(it) },
+                extracted.other.map { persistFood(it) }
         ))
     }
 
-    private fun persistFoodTypes(food: Food): Food {
+    private fun persistFood(food: Food): Food {
         return foodRepository.save(Food(
                 food.description,
-                food.foodTypes.map { foodType ->
-                    if (!foodTypeRepository.exists(foodType.type)) {
-                        foodTypeRepository.save(foodType)
-                    } else {
-                        foodTypeRepository.findOne(foodType.type);
-                    }
-                },
+                food.foodTypes.map { persistFoodType(it) },
                 food.id
         ))
+    }
+
+    private fun persistFoodType(foodType: FoodType): FoodType {
+        if (!foodTypeRepository.exists(foodType.type)) {
+            return foodTypeRepository.save(foodType)
+        }
+        return foodTypeRepository.findOne(foodType.type);
     }
 
     @Override
